@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
+  color: aliceblue;
+}
+
+.active-link {
+  color: red;
+}
+
+.normal-link {
+  color: #1a1a1a;
+}
+
+body {
+  background-image: url("./assets/13756536_5297078.jpg");
+  background-size: cover;
+}
