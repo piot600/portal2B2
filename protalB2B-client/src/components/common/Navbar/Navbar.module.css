@@ -1,0 +1,39 @@
+.nav {
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.nav a {
+  color: #0070f3;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  color: rgb(239, 23, 98);
+}
+
+.ul {
+  display: flex;
+  list-style-type: none;
+  gap: 20px;
+}
+
+.button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #0070f3;
+}
+
+.button:hover {
+  color: rgb(239, 23, 98);
+}
+
+.username {
+  color: rgb(239, 23, 98);
+}
