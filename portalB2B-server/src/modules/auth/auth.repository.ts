@@ -1,13 +1,6 @@
 import { RowDataPacket } from "mysql2";
 import { dbPool } from "../../config/dbPool.js";
-
-export interface UserRow {
-  id: number;
-  username: string;
-  email: string;
-  password: string;
-  role: string;
-}
+import { UserRow } from "../../types/user.js";
 
 export async function findUserByEmail(email: string) {
   const [rows] = await dbPool.query<(UserRow & RowDataPacket)[]>(

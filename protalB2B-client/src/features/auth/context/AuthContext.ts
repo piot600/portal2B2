@@ -3,6 +3,7 @@ import type { ApiResponse, UserDto } from "../types/userTypes";
 
 type AuthContextType = {
   user: UserDto | null;
+  setUser: React.Dispatch<React.SetStateAction<UserDto | null>>;
   login: (email: string, password: string) => Promise<ApiResponse<UserDto>>;
   logout: () => Promise<void>;
 };

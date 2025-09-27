@@ -15,6 +15,10 @@
 }
 
 body {
-  background-image: url("./assets/13756536_5297078.jpg");
-  background-size: cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.7)),
+    url("./assets/bg.jpg") no-repeat center center;
+  background-size: cover; /* dopasuje obraz do ekranu */
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; /* upewnia się, że tło wypełnia ekran */
 }
