@@ -15,5 +15,6 @@ export async function loginUser(email: string, password: string) {
     id: user.id,
     email: user.email,
     role: user.role,
+    mustChangePassword: user.must_change_password,
   };
 }

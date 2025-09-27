@@ -11,7 +11,7 @@ function LoginForm() {
   const [error, setError] = useState("");
   const { login } = useAuth();
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent): Promise<void> {
     e.preventDefault();
 
     try {
