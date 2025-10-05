@@ -1,41 +1,112 @@
-// src/components/layout/Navbar/navLinks.ts
 import type { Role } from "../../../features/auth/types/userTypes";
 
-export interface NavLinkItem {
+export interface NavSubLink {
   to: string;
   label: string;
 }
 
-// 🔹 Gość (niezalogowany)
-export const guestLinks: NavLinkItem[] = [
-  { to: "/", label: "Home" },
-  { to: "/login", label: "Login" },
+export interface NavCategory {
+  label: string;
+  links: NavSubLink[];
+}
+
+export type NavMenu = NavCategory[];
+
+export const guestMenu: NavMenu = [
+  {
+    label: "General",
+    links: [
+      { to: "/", label: "Home" },
+      { to: "/login", label: "Login" },
+    ],
+  },
 ];
 
-// 🔹 Wspólne linki dla zalogowanych
-const commonAuthLinks: NavLinkItem[] = [
-  { to: "/", label: "Home" },
-  { to: "/user/change-password", label: "Change Password" },
+const commonAuthMenu: NavMenu = [
+  {
+    label: "General",
+    links: [{ to: "/", label: "Home" }],
+  },
 ];
 
-// 🔹 Linki specyficzne dla ról
-const roleSpecificLinks: Record<Role, NavLinkItem[]> = {
-  employee: [{ to: "/media", label: "Media" }],
-  distributor: [
-    { to: "/sales-channels/add", label: "Add Report" },
-    { to: "/sales-reports", label: "My Reports" },
+const roleSpecificMenus: Record<Role, NavMenu> = {
+  employee: [
+    {
+      label: "Media",
+      links: [{ to: "/media", label: "Media Library" }],
+    },
   ],
-  manager: [{ to: "/sales-reports", label: "Distributor Reports" }],
-  admin: [{ to: "/sales-reports", label: "All Reports" }],
+
+  distributor: [
+    {
+      label: "Sales Channels",
+      links: [
+        { to: "/sales-channels/add", label: "Add Sales Report" },
+        { to: "/sales-reports", label: "My Sales Reports" },
+      ],
+    },
+    {
+      label: "Purchase Reports",
+      links: [{ to: "/purchase-reports", label: "My Purchase Reports" }],
+    },
+    {
+      label: "Team",
+      links: [{ to: "/my-employees", label: "My Employees" }],
+    },
+  ],
+
+  manager: [
+    {
+      label: "Sales Channels",
+      links: [{ to: "/sales-reports", label: "Distributor Sales Reports" }],
+    },
+    {
+      label: "Purchase Reports",
+      links: [
+        { to: "/purchase-reports", label: "Distributor Purchase Reports" },
+        { to: "/purchase-reports/add", label: "Add Purchase Report" },
+      ],
+    },
+    {
+      label: "Distributors",
+      links: [{ to: "/my-distributors", label: "My Distributors" }],
+    },
+  ],
+
+  admin: [
+    {
+      label: "Reports",
+      links: [
+        { to: "/sales-reports", label: "All Sales Reports" },
+        { to: "/purchase-reports", label: "All Purchase Reports" },
+      ],
+    },
+    {
+      label: "Users",
+      links: [{ to: "/all-users", label: "All Users" }],
+    },
+  ],
+
   superadmin: [
-    { to: "/sales-reports", label: "All Reports" },
-    { to: "/superadmin/add-user", label: "Add User" },
-    { to: "/logs", label: "Logs" },
+    {
+      label: "Reports",
+      links: [
+        { to: "/sales-reports", label: "All Sales Reports" },
+        { to: "/purchase-reports", label: "All Purchase Reports" },
+      ],
+    },
+    {
+      label: "Management",
+      links: [
+        { to: "/all-users", label: "All Users" },
+        { to: "/superadmin/add-user", label: "Add User" },
+        { to: "/logs", label: "Logs" },
+      ],
+    },
   ],
 };
 
-// 🔹 Główna funkcja zwracająca linki dla danej roli
-export function getNavLinksForRole(role?: Role): NavLinkItem[] {
-  if (!role) return guestLinks;
-  return [...commonAuthLinks, ...(roleSpecificLinks[role] || [])];
+export function getNavMenuForRole(role?: Role): NavMenu {
+  if (!role) return guestMenu;
+  return [...commonAuthMenu, ...(roleSpecificMenus[role] || [])];
 }

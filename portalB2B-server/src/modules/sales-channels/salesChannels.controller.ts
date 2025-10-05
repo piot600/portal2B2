@@ -7,10 +7,6 @@ import {
 } from "./salesChannels.service.js";
 import { stringify } from "csv-stringify/sync";
 
-/**
- * POST /sales-channels/add
- * Dostęp: tylko DYSTRYBUTOR
- */
 export async function createReport(req: Request, res: Response) {
   try {
     const user = req.session.data;
@@ -24,10 +20,6 @@ export async function createReport(req: Request, res: Response) {
   }
 }
 
-/**
- * GET /sales-channels/my-reports
- * Dostęp: tylko DYSTRYBUTOR
- */
 export async function getMyReports(req: Request, res: Response) {
   try {
     const user = req.session.data;
@@ -41,10 +33,6 @@ export async function getMyReports(req: Request, res: Response) {
   }
 }
 
-/**
- * GET /sales-channels/export
- * Dostęp: MANAGER, ADMIN, SUPERADMIN
- */
 export async function exportCsv(req: Request, res: Response) {
   try {
     const user = req.session.data;
@@ -86,11 +74,6 @@ export async function exportCsv(req: Request, res: Response) {
   }
 }
 
-/**
- * GET /sales-channels
- * Dostęp: ADMIN, SUPERADMIN
- * GET /sales-channels/manager – dla MANAGERA
- */
 export async function getAllReports(req: Request, res: Response) {
   try {
     const user = req.session.data;

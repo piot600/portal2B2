@@ -3,6 +3,7 @@ import { useAuth } from "../../auth/context/useAuth";
 import SalesChannelsService from "../services/SalesChannelsService";
 import SalesChannelsTable from "../components/SalesChannelsTable";
 import type { SalesChannelDto } from "../types/salesChannels";
+import styles from "./SalesReportsPage.module.css";
 
 export default function SalesReportsPage() {
   const { user } = useAuth();
@@ -12,7 +13,6 @@ export default function SalesReportsPage() {
 
   const role = user?.role;
 
-  // 🟦 Ładowanie danych w zależności od roli
   useEffect(() => {
     async function fetchReports() {
       try {
@@ -28,10 +28,10 @@ export default function SalesReportsPage() {
           const data = await SalesChannelsService.getAllReports();
           setReports(data);
         } else {
-          setError("Brak uprawnień do wyświetlenia raportów.");
+          setError("No reports!");
         }
       } catch {
-        setError("❌ Błąd podczas pobierania danych.");
+        setError("❌ Error during fetching reports");
       } finally {
         setLoading(false);
       }
@@ -40,29 +40,34 @@ export default function SalesReportsPage() {
     fetchReports();
   }, [role]);
 
-  if (loading) return <p>⏳ Wczytywanie danych...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (loading) return <p>Loading data...</p>;
+  if (error) return <p className={styles.error}>{error}</p>;
 
-  // 🟨 Ustal tytuł strony i dostępne akcje
   const title =
     role === "distributor"
-      ? "📊 My Sales Reports"
+      ? "My Sales Reports"
       : role === "manager"
-      ? "📈 Distributor Reports"
-      : "🗂️ All Distributor Reports";
+      ? "Distributor Reports"
+      : "All Distributor Reports";
 
   const canExport =
     role === "manager" || role === "admin" || role === "superadmin";
 
-  return (
-    <div>
-      <h1>{title}</h1>
+  const handleExport = () => {
+    SalesChannelsService.exportAllReports();
+  };
 
-      {canExport && (
-        <button onClick={() => SalesChannelsService.exportAllReports()}>
-          ⬇️ Export CSV
-        </button>
-      )}
+  return (
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>{title}</h1>
+
+        {canExport && (
+          <button className={styles.exportButton} onClick={handleExport}>
+            ⬇️ Export CSV
+          </button>
+        )}
+      </div>
 
       <SalesChannelsTable data={reports} />
     </div>

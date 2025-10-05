@@ -33,3 +33,26 @@ export async function findUserById(id: number) {
   );
   return rows[0];
 }
+
+export async function findDistributorsByManager(managerId: number) {
+  const [rows] = await dbPool.query(
+    `SELECT id, email, role FROM users WHERE manager_id = ? AND role = 'distributor'`,
+    [managerId]
+  );
+  return rows;
+}
+
+export async function findEmployeesByDistributor(distributorId: number) {
+  const [rows] = await dbPool.query(
+    `SELECT id, email, role FROM users WHERE manager_id = ? AND role = 'employee'`,
+    [distributorId]
+  );
+  return rows;
+}
+
+export async function findAllUsers() {
+  const [rows] = await dbPool.query(
+    `SELECT id, email, role, manager_id FROM users ORDER BY role ASC`
+  );
+  return rows;
+}

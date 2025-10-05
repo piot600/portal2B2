@@ -1,42 +1,74 @@
-// src/components/layout/Navbar/Navbar.tsx
+import { useState } from "react";
 import { useAuth } from "../../../features/auth/context/useAuth";
-import { NavLink } from "react-router-dom";
-import styles from "./Navbar.module.css";
-import { getNavLinksForRole } from "./navLinks";
+import { getNavMenuForRole } from "./navLinks";
 import type { Role } from "../../../features/auth/types/userTypes";
+import NavCategory from "./components/NavCategory";
+import UserMenu from "./components/UserMenu";
+import styles from "./Navbar.module.css";
 
 function Navbar() {
   const { user, logout } = useAuth();
-  const navLinks = getNavLinksForRole(user?.role as Role | undefined);
+  const role = user?.role as Role | undefined;
+  const navMenu = getNavMenuForRole(role);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
+  const closeMenu = () => {
+    setMenuOpen(false);
+    setOpenDropdown(null);
+  };
+
+  const toggleDropdown = (label: string) => {
+    setOpenDropdown((prev) => (prev === label ? null : label));
+  };
+
+  const handleLogout = () => {
+    logout();
+    closeMenu();
+  };
 
   return (
-    <nav className={styles.nav}>
-      <ul className={styles.ul}>
-        {navLinks.map((link) => (
-          <li key={link.to}>
-            <NavLink
-              to={link.to}
-              className={({ isActive }) =>
-                isActive ? styles.activeLink : undefined
-              }
-            >
-              {link.label}
-            </NavLink>
-          </li>
-        ))}
-      </ul>
+    <header className={styles.header}>
+      <nav className={styles.nav}>
+        <div className={styles.logo}>PortalB2B</div>
 
-      {user && (
-        <ul className={styles.ul}>
-          <li className={styles.username}>{user.email}</li>
-          <li>
-            <button className={styles.button} onClick={logout}>
-              Logout
-            </button>
-          </li>
+        {/* Hamburger icon (mobile) */}
+        <button
+          className={`${styles.hamburger} ${menuOpen ? styles.open : ""}`}
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+          aria-expanded={menuOpen}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <ul className={`${styles.menu} ${menuOpen ? styles.active : ""}`}>
+          {navMenu.map((category) => (
+            <NavCategory
+              key={category.label}
+              category={category}
+              isOpen={openDropdown === category.label}
+              onToggle={toggleDropdown}
+              onClose={closeMenu}
+            />
+          ))}
+
+          {user && (
+            <UserMenu
+              email={user.email}
+              isOpen={openDropdown === "user"}
+              onToggle={() => toggleDropdown("user")}
+              onLogout={handleLogout}
+              onClose={closeMenu}
+            />
+          )}
         </ul>
-      )}
-    </nav>
+      </nav>
+    </header>
   );
 }
 
