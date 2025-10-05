@@ -12,6 +12,14 @@ export async function login(req: Request, res: Response) {
     if (err.message === "Invalid email or password") {
       return res.status(401).json({ error: err.message });
     }
+
+    if (
+      err.message === "Account is locked" ||
+      err.message === "Account locked due to too many failed attempts"
+    ) {
+      return res.status(403).json({ error: err.message });
+    }
+
     console.error(err);
     res.status(500).json({ error: "Server error during login" });
   }

@@ -8,6 +8,10 @@ import { SuperadminRoutes } from "./routes/SuperadminRoutes";
 import AddUserPage from "./features/user/pages/AddUserPage";
 import { UnauthenticatedRoute } from "./routes/UnauthenticatedRoute";
 import { AuthenticatedRoute } from "./routes/AuthenticatedRoute";
+import SalesChannelsPage from "./features/sales-channels/pages/SalesChannelsPage";
+import SalesChannelsManagerPage from "./features/sales-channels/pages/SalesChannelsManagerPage";
+import SalesReportsPage from "./features/sales-channels/pages/SalesReportsPage";
+import AddSalesChannelPage from "./features/sales-channels/pages/AddSalesChannelPage";
 
 function App() {
   return (
@@ -31,6 +35,18 @@ function App() {
             <Route element={<SuperadminRoutes />}>
               <Route path="/superadmin/add-user" element={<AddUserPage />} />
             </Route>
+            {/* Dystrybutor */}
+            <Route path="/reports" element={<SalesChannelsPage />} />
+            <Route path="/sales-reports" element={<SalesReportsPage />} />
+            <Route
+              path="/sales-channels/add"
+              element={<AddSalesChannelPage />}
+            />
+            {/* Manager */}
+            <Route
+              path="/manager/reports"
+              element={<SalesChannelsManagerPage />}
+            />
           </Route>
         </Route>
       </Routes>
