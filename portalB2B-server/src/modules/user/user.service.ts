@@ -1,5 +1,8 @@
 import {
   createUser,
+  findAllUsers,
+  findDistributorsByManager,
+  findEmployeesByDistributor,
   findUserById,
   updateUserPasswordRepo,
 } from "./user.repository.js";
@@ -28,4 +31,20 @@ export async function changeUserPassword(userId: number, password: string) {
   }
 
   return updatedUser;
+}
+
+export async function getDistributorsForManager(user: any) {
+  if (user.role !== "manager") throw new Error("Access denied");
+  return findDistributorsByManager(user.id);
+}
+
+export async function getEmployeesForDistributor(user: any) {
+  if (user.role !== "distributor") throw new Error("Access denied");
+  return findEmployeesByDistributor(user.id);
+}
+
+export async function getAllUsersForAdmin(user: any) {
+  if (!["admin", "superadmin"].includes(user.role))
+    throw new Error("Access denied");
+  return findAllUsers();
 }

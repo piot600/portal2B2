@@ -10,8 +10,8 @@ function HomePage() {
 
   return (
     <div>
-      <h1 className={styles.s1}>Witaj {user.email}</h1>
-      <p>Twoja rola: {user.role}</p>
+      <h1 className={styles.s1}>Welcome {user.email}</h1>
+      <h3 className={styles.h3}>Role: {user.role}</h3>
     </div>
   );
 }

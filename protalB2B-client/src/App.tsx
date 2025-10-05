@@ -8,10 +8,13 @@ import { SuperadminRoutes } from "./routes/SuperadminRoutes";
 import AddUserPage from "./features/user/pages/AddUserPage";
 import { UnauthenticatedRoute } from "./routes/UnauthenticatedRoute";
 import { AuthenticatedRoute } from "./routes/AuthenticatedRoute";
-import SalesChannelsPage from "./features/sales-channels/pages/SalesChannelsPage";
-import SalesChannelsManagerPage from "./features/sales-channels/pages/SalesChannelsManagerPage";
 import SalesReportsPage from "./features/sales-channels/pages/SalesReportsPage";
 import AddSalesChannelPage from "./features/sales-channels/pages/AddSalesChannelPage";
+import PurchaseReportsPage from "./features/purchase-reports/pages/PurchaseReportsPage";
+import AddPurchaseReportPage from "./features/purchase-reports/pages/AddPurchaseReportsPage";
+import MyDistributorsPage from "./features/user/pages/UsersPages/MyDistributorsPage";
+import MyEmployeesPage from "./features/user/pages/UsersPages/MyEmployeesPage";
+import AllUsersPage from "./features/user/pages/UsersPages/AllUsersPage";
 
 function App() {
   return (
@@ -36,17 +39,29 @@ function App() {
               <Route path="/superadmin/add-user" element={<AddUserPage />} />
             </Route>
             {/* Dystrybutor */}
-            <Route path="/reports" element={<SalesChannelsPage />} />
+
             <Route path="/sales-reports" element={<SalesReportsPage />} />
             <Route
               path="/sales-channels/add"
               element={<AddSalesChannelPage />}
             />
             {/* Manager */}
+
+            {/* 💰 Purchase Reports */}
+            <Route path="/purchase-reports" element={<PurchaseReportsPage />} />
             <Route
-              path="/manager/reports"
-              element={<SalesChannelsManagerPage />}
+              path="/purchase-reports/add"
+              element={<AddPurchaseReportPage />}
             />
+
+            {/* Manager */}
+            <Route path="/my-distributors" element={<MyDistributorsPage />} />
+
+            {/* Distributor */}
+            <Route path="/my-employees" element={<MyEmployeesPage />} />
+
+            {/* Admin / Superadmin */}
+            <Route path="/all-users" element={<AllUsersPage />} />
           </Route>
         </Route>
       </Routes>

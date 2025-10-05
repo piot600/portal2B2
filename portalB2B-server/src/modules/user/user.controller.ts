@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
-import { changeUserPassword, registerUser } from "./user.service.js";
+import {
+  changeUserPassword,
+  getAllUsersForAdmin,
+  getDistributorsForManager,
+  getEmployeesForDistributor,
+  registerUser,
+} from "./user.service.js";
 
 export async function addUser(req: Request, res: Response) {
   try {
@@ -57,5 +63,50 @@ export async function changePassword(req: Request, res: Response) {
     }
 
     res.status(500).json({ error: "Failed to update password" });
+  }
+}
+
+export async function getMyDistributors(req: Request, res: Response) {
+  try {
+    const user = req.session.data;
+    const distributors = await getDistributorsForManager(user);
+    res.json({ data: distributors });
+  } catch (err: any) {
+    const message =
+      err.message === "Access denied"
+        ? "Access denied"
+        : "Failed to fetch distributors";
+    const code = err.message === "Access denied" ? 403 : 500;
+    res.status(code).json({ error: message });
+  }
+}
+
+export async function getMyEmployees(req: Request, res: Response) {
+  try {
+    const user = req.session.data;
+    const employees = await getEmployeesForDistributor(user);
+    res.json({ data: employees });
+  } catch (err: any) {
+    const message =
+      err.message === "Access denied"
+        ? "Access denied"
+        : "Failed to fetch employees";
+    const code = err.message === "Access denied" ? 403 : 500;
+    res.status(code).json({ error: message });
+  }
+}
+
+export async function getAllUsers(req: Request, res: Response) {
+  try {
+    const user = req.session.data;
+    const users = await getAllUsersForAdmin(user);
+    res.json({ data: users });
+  } catch (err: any) {
+    const message =
+      err.message === "Access denied"
+        ? "Access denied"
+        : "Failed to fetch users";
+    const code = err.message === "Access denied" ? 403 : 500;
+    res.status(code).json({ error: message });
   }
 }
