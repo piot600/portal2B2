@@ -1,3 +1,4 @@
+// src/components/layout/Navbar/navLinks.ts
 import type { Role } from "../../../features/auth/types/userTypes";
 
 export interface NavLinkItem {
@@ -5,39 +6,36 @@ export interface NavLinkItem {
   label: string;
 }
 
-// {Guest Links}
+// 🔹 Gość (niezalogowany)
 export const guestLinks: NavLinkItem[] = [
   { to: "/", label: "Home" },
   { to: "/login", label: "Login" },
 ];
 
-// {Auth Links}
+// 🔹 Wspólne linki dla zalogowanych
 const commonAuthLinks: NavLinkItem[] = [
   { to: "/", label: "Home" },
-  { to: "/user/change-password", label: "Change Password" }, // 👈 tu
+  { to: "/user/change-password", label: "Change Password" },
 ];
 
-// {Roles Lins}
+// 🔹 Linki specyficzne dla ról
 const roleSpecificLinks: Record<Role, NavLinkItem[]> = {
-  employee: [],
-  distributor: [{ to: "/reports", label: "Sales Reports" }],
-  manager: [
-    { to: "/reports", label: "Sales Reports" },
-    { to: "/targets", label: "Targets" },
+  employee: [{ to: "/media", label: "Media" }],
+  distributor: [
+    { to: "/sales-channels/add", label: "Add Report" },
+    { to: "/sales-reports", label: "My Reports" },
   ],
-  admin: [
-    { to: "/reports", label: "Sales Reports" },
-    { to: "/admin/dashboard", label: "Admin Dashboard" },
-  ],
+  manager: [{ to: "/sales-reports", label: "Distributor Reports" }],
+  admin: [{ to: "/sales-reports", label: "All Reports" }],
   superadmin: [
-    { to: "/reports", label: "Sales Reports" },
-    { to: "/admin/dashboard", label: "Admin Dashboard" },
+    { to: "/sales-reports", label: "All Reports" },
     { to: "/superadmin/add-user", label: "Add User" },
     { to: "/logs", label: "Logs" },
   ],
 };
 
+// 🔹 Główna funkcja zwracająca linki dla danej roli
 export function getNavLinksForRole(role?: Role): NavLinkItem[] {
   if (!role) return guestLinks;
-  return [...commonAuthLinks, ...roleSpecificLinks[role]];
+  return [...commonAuthLinks, ...(roleSpecificLinks[role] || [])];
 }
