@@ -1,13 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styles from "../Navbar.module.css";
-
-interface UserMenuProps {
-  email: string;
-  isOpen: boolean;
-  onToggle: () => void;
-  onLogout: () => void;
-  onClose: () => void;
-}
+import type { UserMenuProps } from "../navbarTypes";
 
 function UserMenu({
   email,

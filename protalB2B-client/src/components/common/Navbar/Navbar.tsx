@@ -5,6 +5,7 @@ import type { Role } from "../../../features/auth/types/userTypes";
 import NavCategory from "./components/NavCategory";
 import UserMenu from "./components/UserMenu";
 import styles from "./Navbar.module.css";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const { user, logout } = useAuth();
@@ -34,7 +35,6 @@ function Navbar() {
       <nav className={styles.nav}>
         <div className={styles.logo}>PortalB2B</div>
 
-        {/* Hamburger icon (mobile) */}
         <button
           className={`${styles.hamburger} ${menuOpen ? styles.open : ""}`}
           onClick={toggleMenu}
@@ -47,15 +47,23 @@ function Navbar() {
         </button>
 
         <ul className={`${styles.menu} ${menuOpen ? styles.active : ""}`}>
-          {navMenu.map((category) => (
-            <NavCategory
-              key={category.label}
-              category={category}
-              isOpen={openDropdown === category.label}
-              onToggle={toggleDropdown}
-              onClose={closeMenu}
-            />
-          ))}
+          {navMenu.map((item) =>
+            "links" in item ? (
+              <NavCategory
+                key={item.label}
+                category={item}
+                isOpen={openDropdown === item.label}
+                onToggle={toggleDropdown}
+                onClose={closeMenu}
+              />
+            ) : (
+              <li key={item.to}>
+                <Link to={item.to} onClick={closeMenu} className={styles.link}>
+                  {item.label}
+                </Link>
+              </li>
+            )
+          )}
 
           {user && (
             <UserMenu
