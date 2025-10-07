@@ -1,41 +1,20 @@
 import type { Role } from "../../../features/auth/types/userTypes";
+import type { NavCategory, NavSubLink } from "./navbarTypes";
 
-export interface NavSubLink {
-  to: string;
-  label: string;
-}
-
-export interface NavCategory {
-  label: string;
-  links: NavSubLink[];
-}
-
-export type NavMenu = NavCategory[];
+export type NavMenu = (NavCategory | NavSubLink)[];
 
 export const guestMenu: NavMenu = [
-  {
-    label: "General",
-    links: [
-      { to: "/", label: "Home" },
-      { to: "/login", label: "Login" },
-    ],
-  },
+  { to: "/", label: "Home" },
+  { to: "/login", label: "Login" },
 ];
 
 const commonAuthMenu: NavMenu = [
-  {
-    label: "General",
-    links: [{ to: "/", label: "Home" }],
-  },
+  { to: "/", label: "Home" },
+  { to: "/media", label: "Media" },
 ];
 
 const roleSpecificMenus: Record<Role, NavMenu> = {
-  employee: [
-    {
-      label: "Media",
-      links: [{ to: "/media", label: "Media Library" }],
-    },
-  ],
+  employee: [],
 
   distributor: [
     {

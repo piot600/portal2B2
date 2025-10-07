@@ -36,7 +36,7 @@ function LoginForm() {
       <input
         className={styles.input}
         id="email"
-        name="email" // 👈 zamiast username
+        name="email"
         type="text"
         onChange={(e) => handleChange(e)}
       />

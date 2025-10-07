@@ -15,6 +15,7 @@ import AddPurchaseReportPage from "./features/purchase-reports/pages/AddPurchase
 import MyDistributorsPage from "./features/user/pages/UsersPages/MyDistributorsPage";
 import MyEmployeesPage from "./features/user/pages/UsersPages/MyEmployeesPage";
 import AllUsersPage from "./features/user/pages/UsersPages/AllUsersPage";
+import MediaPage from "./features/media/pages/MediaPage";
 
 function App() {
   return (
@@ -62,6 +63,8 @@ function App() {
 
             {/* Admin / Superadmin */}
             <Route path="/all-users" element={<AllUsersPage />} />
+
+            <Route path="/media" element={<MediaPage />} />
           </Route>
         </Route>
       </Routes>

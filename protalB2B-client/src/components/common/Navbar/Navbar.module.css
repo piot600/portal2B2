@@ -3,7 +3,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -29,24 +29,27 @@
   display: flex;
   align-items: center;
   list-style: none;
-  gap: 28px;
+  gap: 40px;
 }
 
 .category {
   position: relative;
 }
 
-.categoryLabel {
+.categoryLabel,
+.link {
   background: none;
   border: none;
-  color: #1a1a1a;
+  color: white;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
   transition: color 0.2s ease;
+  text-decoration: none;
 }
 
-.categoryLabel:hover {
+.categoryLabel:hover,
+.link:hover {
   color: #0070f3;
 }
 
@@ -161,9 +164,9 @@
     top: 0;
     right: 0;
     flex-direction: column;
-    width: 70%;
+    width: 30%;
     height: 100vh;
-    background: #fff;
+    background: rgba(255, 255, 255, 0.1);
     padding: 100px 32px;
     transform: translateX(100%);
     opacity: 0;

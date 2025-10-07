@@ -1,15 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styles from "../Navbar.module.css";
-
-interface NavCategoryProps {
-  category: {
-    label: string;
-    links: { to: string; label: string }[];
-  };
-  isOpen: boolean;
-  onToggle: (label: string) => void;
-  onClose: () => void;
-}
+import type { NavCategoryProps } from "../navbarTypes";
 
 function NavCategory({
   category,
